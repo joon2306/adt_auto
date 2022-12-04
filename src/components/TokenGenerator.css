@@ -1,5 +1,5 @@
 .text-btn{
-    font-size:150%;
+    font-size:110%;
 }
 
 .margin-50{
@@ -24,4 +24,9 @@
 
 .margin-15-bottom{
     margin-bottom:15px;
+}
+
+.center{
+    display: flex;
+    justify-content: center;
 }

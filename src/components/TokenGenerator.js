@@ -12,8 +12,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 export default function TokenGenerator() {
-  const [variantRenault, setVariantRenault] = useState("warning");
-  const [variantNissan, setVariantNissan] = useState("primary");
+  const [variant, setVariant] = useState("primary");
   const [disable, setDisable] = useState(false);
   const [val, setVal] = useState(1);
   const [users, setUsers] = useState([]);
@@ -22,17 +21,15 @@ export default function TokenGenerator() {
 
   const loading = () => {
     setDisable(true);
-    setVariantRenault("secondary");
-    setVariantNissan("secondary");
+    setVariant("secondary");
     loaderService.load();
-  }
+  };
 
   const unloading = () => {
     loaderService.stop();
-    setVariantRenault("warning");
-    setVariantNissan("primary");
+    setVariant("primary");
     setDisable(false);
-  }
+  };
 
   const getToken = (nissan) => {
     if (!user) {
@@ -40,10 +37,10 @@ export default function TokenGenerator() {
       return;
     }
     const id = user.id;
+    const brand = user.brand.toLowerCase();
     loading();
-    let uri = nissan ? baseUri + "/nissan" : baseUri + "/renault";
     const env = Environment[val];
-    uri = `${uri}/${env}/${id}`;
+    const uri = `${baseUri}/${brand}/${env}/${id}`;
     axios
       .get(uri)
       .then((response) => {
@@ -128,7 +125,7 @@ export default function TokenGenerator() {
         ) : (
           <>
             <Row>
-              <Col xs={10} sm={10} md={10} lg={10}>
+              <Col xs={9} sm={9} md={9} lg={9}>
                 <Form.Select
                   aria-label="Default select example"
                   className={"margin-15-top margin-15-bottom"}
@@ -142,17 +139,21 @@ export default function TokenGenerator() {
                 </Form.Select>
               </Col>
               <Col
-                xs={2}
-                sm={2}
-                md={2}
-                lg={2}
+                xs={3}
+                sm={3}
+                md={3}
+                lg={3}
                 style={{
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "end",
                 }}
               >
-                <Button variant="success" onClick={() => copy()} disabled={disable}>
+                <Button
+                  variant="success"
+                  onClick={() => copy()}
+                  disabled={disable}
+                >
                   Copy
                 </Button>
               </Col>
@@ -160,26 +161,16 @@ export default function TokenGenerator() {
           </>
         )}
 
-        <Button
-          variant={variantRenault}
-          className={
-            "text-btn margin-50 padding-15 padding-left-30 padding-right-30"
-          }
-          onClick={() => getToken(false)}
-          disabled={disable}
-        >
-          Renault
-        </Button>
-        <Button
-          variant={variantNissan}
-          className={
-            "text-btn margin-50 padding-15 padding-left-30 padding-right-30"
-          }
-          onClick={() => getToken(true)}
-          disabled={disable}
-        >
-          Nissan
-        </Button>
+        <div className={"center"}>
+          <Button
+            variant={variant}
+            className={"text-btn margin-15-top"}
+            onClick={() => getToken(false)}
+            disabled={disable}
+          >
+            Generate
+          </Button>
+        </div>
       </div>
     </>
   );

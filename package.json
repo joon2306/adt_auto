@@ -4,7 +4,7 @@
   "main": "public/electron.js",
   "homepage": "./",
   "private": true,
-  "description": "My Token Generator App",
+  "description": "My Auto App",
   "author": "Arjoonsing Pertaub",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
@@ -59,13 +59,13 @@
     "forge": {
       "packagerConfig": {
         "icon": "src/icons/mac/icon.icns",
-        "name": "React + Electron App"
+        "name": "ADT Auto"
       },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "cra_electron_forge_demo"
+            "name": "adt_auto"
           }
         },
         {
