@@ -24,6 +24,41 @@ class UserService {
       return [];
     }
   }
+
+  copyUsername(user) {
+    const usernameUrl = baseUri + "/username/" + user.id;
+    return axios.get(usernameUrl).then((res) => {
+      if (res?.data === "Success") {
+        return "Success";
+      } else {
+        return "Failed";
+      }
+    });
+  }
+
+  copyPwd(user) {
+    const pwdUrl = baseUri + "/pwd/" + user.id;
+    return axios.get(pwdUrl).then((res) => {
+      if (res?.data === "Success") {
+        return "Success";
+      } else {
+        return "Failed";
+      }
+    });
+  }
+
+  copyUser(user) {
+    if (!user) {
+      return "Failed";
+    }
+    this.copyUsername(user).then((res) => {
+      if (res === "Success") {
+        setTimeout(() => {
+          this.copyPwd(user)
+        },2000);
+      }
+    });
+  }
 }
 
 const userService = Object.freeze(new UserService());

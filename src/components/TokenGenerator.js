@@ -8,6 +8,8 @@ import Form from "react-bootstrap/Form";
 import Environment from "../lib/Environment";
 import BaseUri from "../lib/BaseUri";
 import userService from "../services/UserService";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 export default function TokenGenerator() {
   const [variantRenault, setVariantRenault] = useState("warning");
@@ -18,16 +20,27 @@ export default function TokenGenerator() {
   const [user, setUser] = useState(null);
   const baseUri = BaseUri.url;
 
+  const loading = () => {
+    setDisable(true);
+    setVariantRenault("secondary");
+    setVariantNissan("secondary");
+    loaderService.load();
+  }
+
+  const unloading = () => {
+    loaderService.stop();
+    setVariantRenault("warning");
+    setVariantNissan("primary");
+    setDisable(false);
+  }
+
   const getToken = (nissan) => {
     if (!user) {
       notificationService.warn("User not selected");
       return;
     }
     const id = user.id;
-    setDisable(true);
-    setVariantRenault("secondary");
-    setVariantNissan("secondary");
-    loaderService.load();
+    loading();
     let uri = nissan ? baseUri + "/nissan" : baseUri + "/renault";
     const env = Environment[val];
     uri = `${uri}/${env}/${id}`;
@@ -46,10 +59,7 @@ export default function TokenGenerator() {
         notificationService.warn("Server Error");
       })
       .finally(() => {
-        loaderService.stop();
-        setVariantRenault("warning");
-        setVariantNissan("primary");
-        setDisable(false);
+        unloading();
       });
   };
 
@@ -62,6 +72,24 @@ export default function TokenGenerator() {
     const val = e.target.value;
     const selectedUser = users.find((el) => el.id === +val);
     setUser(selectedUser);
+  };
+
+  const copy = () => {
+    if (!user) {
+      notificationService.warn("User empty");
+      return;
+    }
+    loading();
+
+    userService.copyUsername(user).then((res) => {
+      if (res === "Success") {
+        setTimeout(() => {
+          userService.copyPwd(user);
+          notificationService.info("Successfully Copied User");
+          unloading();
+        }, 2000);
+      }
+    });
   };
 
   useEffect(() => {
@@ -98,17 +126,38 @@ export default function TokenGenerator() {
         {!users.length ? (
           <></>
         ) : (
-          <Form.Select
-            aria-label="Default select example"
-            className={"margin-15-top margin-15-bottom"}
-            onChange={(e) => selectUser(e)}
-          >
-            {users.map((op) => (
-              <option key={op.id} value={op.id}>
-                {op.username}; {op.brand}; {op.role}
-              </option>
-            ))}
-          </Form.Select>
+          <>
+            <Row>
+              <Col xs={10} sm={10} md={10} lg={10}>
+                <Form.Select
+                  aria-label="Default select example"
+                  className={"margin-15-top margin-15-bottom"}
+                  onChange={(e) => selectUser(e)}
+                >
+                  {users.map((op) => (
+                    <option key={op.id} value={op.id}>
+                      {op.username}; {op.brand}; {op.role}
+                    </option>
+                  ))}
+                </Form.Select>
+              </Col>
+              <Col
+                xs={2}
+                sm={2}
+                md={2}
+                lg={2}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "end",
+                }}
+              >
+                <Button variant="success" onClick={() => copy()} disabled={disable}>
+                  Copy
+                </Button>
+              </Col>
+            </Row>
+          </>
         )}
 
         <Button
