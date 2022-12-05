@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import "./TokenGenerator.css";
 import axios from "axios";
@@ -11,12 +11,11 @@ import userService from "../services/UserService";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-export default function TokenGenerator() {
+export default function TokenGenerator({ users }) {
   const [variant, setVariant] = useState("primary");
   const [disable, setDisable] = useState(false);
   const [val, setVal] = useState(1);
-  const [users, setUsers] = useState([]);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(users[0]);
   const [type, setType] = useState(true);
   const baseUri = BaseUri.url;
 
@@ -75,7 +74,7 @@ export default function TokenGenerator() {
   const selectType = (e) => {
     const val = e.target.value;
     setType(val);
-  }
+  };
 
   const copy = () => {
     if (!user) {
@@ -94,17 +93,6 @@ export default function TokenGenerator() {
       }
     });
   };
-
-  useEffect(() => {
-    userService.getUsers().then((list) => {
-      if (!users.length) {
-        setUsers(list);
-        if (user === null) {
-          setUser(list[0]);
-        }
-      }
-    });
-  }, [users.length, user]);
 
   return (
     <>
