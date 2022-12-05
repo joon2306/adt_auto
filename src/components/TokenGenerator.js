@@ -10,6 +10,8 @@ import BaseUri from "../lib/BaseUri";
 import userService from "../services/UserService";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { useNavigate } from "react-router-dom";
+import { AiFillAppstore } from 'react-icons/ai';
 
 export default function TokenGenerator({ users }) {
   const [variant, setVariant] = useState("primary");
@@ -18,6 +20,7 @@ export default function TokenGenerator({ users }) {
   const [user, setUser] = useState(users[0]);
   const [type, setType] = useState(true);
   const baseUri = BaseUri.url;
+  const navigate = useNavigate();
 
   const loading = () => {
     setDisable(true);
@@ -164,14 +167,22 @@ export default function TokenGenerator({ users }) {
           <option value="false">Backend</option>
         </Form.Select>
 
-        <div className={"center"}>
+        <div>
           <Button
             variant={variant}
-            className={"text-btn margin-15-top"}
+            className={"text-btn margin-15-top margin-15-right btn-width"}
             onClick={() => getToken(false)}
             disabled={disable}
           >
             Generate
+          </Button>
+          <Button
+            variant="warning"
+            className={"text-btn margin-15-top btn-width"}
+            onClick={() => navigate("/apps")}
+            disabled={disable}
+          >
+            Apps <AiFillAppstore/>
           </Button>
         </div>
       </div>

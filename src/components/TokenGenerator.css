@@ -22,6 +22,10 @@
     margin-top:15px;
 }
 
+.margin-15-right{
+    margin-right: 15px;
+}
+
 .margin-15-bottom{
     margin-bottom:15px;
 }
@@ -29,4 +33,8 @@
 .center{
     display: flex;
     justify-content: center;
+}
+
+.btn-width{
+    width:20vh;
 }

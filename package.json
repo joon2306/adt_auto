@@ -17,6 +17,7 @@
     "react": "^16.13.1",
     "react-bootstrap": "^2.6.0",
     "react-dom": "^16.13.1",
+    "react-icons": "^4.7.1",
     "react-router-dom": "^6.4.4",
     "react-scripts": "3.4.1",
     "react-spinners": "^0.13.7"
@@ -25,7 +26,7 @@
     "dev": "concurrently -k \"BROWSER=none npm start\" \"npm:electron\"",
     "electron": "electron-forge start",
     "start": "react-scripts --openssl-legacy-provider start",
-    "build": "react-scripts build",
+    "build": "react-scripts --openssl-legacy-provider build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "package": "react-scripts build && electron-forge package",

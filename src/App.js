@@ -48,14 +48,15 @@ function App() {
     }
   }, [users.length]);
 
-  const showTokenGenerator = () => {
-   return <Token loading={loading} users={users}></Token>
-  };
+  const props = {
+    loading,
+    users
+  }
 
   return (
     <>
       <div className={"App"}>
-        <Outlet context={{loading, users}}/>
+        <Outlet context={props}/>
         <AlertComponent
           variant={variant}
           alertTxt={alertTxt}

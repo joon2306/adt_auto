@@ -1,6 +1,5 @@
-import React from "react"
+import React from "react";
+import SpecialSpinnerComponent from "../Spinner/SpecialSpinnerComponent";
 export default function AppsComponent() {
-    return(<>
-        Arjoon king;
-    </>)
+  return <SpecialSpinnerComponent></SpecialSpinnerComponent>
 }
