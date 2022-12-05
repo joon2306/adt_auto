@@ -7,7 +7,7 @@ export default function SpinnerComponent({ loading }) {
       <Spinner
         animation="grow"
         role="status"
-        style={{ position: "absolute", top: "70vh" }}
+        style={{ position: "absolute", top: "80vh" }}
         size="md"
       >
         <span className="visually-hidden">Loading...</span>
