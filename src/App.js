@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import TokenGenerator from "./components/TokenGenerator";
 import AlertComponent from "./components/AlertComponent";
-import SpinnerComponent from "./components/SpinnerComponent";
 import notificationService from "./services/NotificationService";
 import loaderService from "./services/LoaderService";
-import SpecialSpinnerComponent from "./components/Spinner/SpecialSpinnerComponent";
 import userService from "./services/UserService";
+import Token from "./components/Token";
+import { Outlet } from "react-router-dom";
 
 function App() {
   /* A variable that is used to set the color of the alert. */
@@ -50,22 +49,13 @@ function App() {
   }, [users.length]);
 
   const showTokenGenerator = () => {
-    if (users.length) {
-      return (
-        <div className={"flex-container center body-height"}>
-          <TokenGenerator users={users}></TokenGenerator>
-          <SpinnerComponent loading={loading}></SpinnerComponent>
-        </div>
-      );
-    } else {
-      return <SpecialSpinnerComponent></SpecialSpinnerComponent>;
-    }
+   return <Token loading={loading} users={users}></Token>
   };
 
   return (
     <>
       <div className={"App"}>
-        {showTokenGenerator()}
+        <Outlet context={{loading, users}}/>
         <AlertComponent
           variant={variant}
           alertTxt={alertTxt}

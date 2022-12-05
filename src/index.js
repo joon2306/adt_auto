@@ -3,10 +3,20 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import AppsComponent from './components/AppsComponent.js/AppsComponent';
+import Token from './components/Token';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+  <BrowserRouter>
+      <Routes>
+      <Route element={<App />}>
+        <Route path="/" element={<Token/>}/>
+        <Route path="/apps*" element={<AppsComponent/>}/>
+      </Route>
+      </Routes>   
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
