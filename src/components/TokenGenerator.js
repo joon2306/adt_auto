@@ -17,6 +17,7 @@ export default function TokenGenerator() {
   const [val, setVal] = useState(1);
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState(null);
+  const [type, setType] = useState(true);
   const baseUri = BaseUri.url;
 
   const loading = () => {
@@ -40,7 +41,7 @@ export default function TokenGenerator() {
     const brand = user.brand.toLowerCase();
     loading();
     const env = Environment[val];
-    const uri = `${baseUri}/${brand}/${env}/${id}`;
+    const uri = `${baseUri}/${brand}/${env}/${id}/${type}`;
     axios
       .get(uri)
       .then((response) => {
@@ -70,6 +71,11 @@ export default function TokenGenerator() {
     const selectedUser = users.find((el) => el.id === +val);
     setUser(selectedUser);
   };
+
+  const selectType = (e) => {
+    const val = e.target.value;
+    setType(val);
+  }
 
   const copy = () => {
     if (!user) {
@@ -160,6 +166,15 @@ export default function TokenGenerator() {
             </Row>
           </>
         )}
+
+        <Form.Select
+          aria-label="Default select example"
+          onChange={(e) => selectType(e)}
+          className={"margin-15-top margin-15-bottom"}
+        >
+          <option value="true">Front</option>
+          <option value="false">Backend</option>
+        </Form.Select>
 
         <div className={"center"}>
           <Button
