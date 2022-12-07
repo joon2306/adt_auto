@@ -11,30 +11,36 @@ export default function AppsComponent() {
   const [apps, setApps] = useState([]);
   const navigate = useNavigate();
   const [disable, setDisable] = useState(false);
+  let lastColour = null;
 
-  const getVariant = (name) => {
-    name = name.toLowerCase();
-    switch (name) {
-      case "sonarqube":
-        return "primary";
-      case "jenkins":
-        return "warning";
-      case "svn":
-        return "success";
-      default:
-        return "danger";
+  const btnColours = ["primary", "warning", "success", "danger"];
+
+  const getColour = () => {
+    if (lastColour === null) {
+      lastColour = btnColours[0];
+      return btnColours[0];
     }
+
+    if(lastColour === btnColours[btnColours.length - 1]){
+      lastColour = btnColours[btnColours.length -1];
+      return btnColours[0];
+    }
+
+    const index = btnColours.indexOf(lastColour);
+    const color = btnColours[index + 1];
+    lastColour = color;
+    return color;
   };
 
   const loading = () => {
     setDisable(true);
     loaderService.load();
-  }
+  };
 
   const unloading = () => {
     setDisable(false);
     loaderService.stop();
-  }
+  };
 
   const copyApp = (username, pwd) => {
     loading();
@@ -64,7 +70,7 @@ export default function AppsComponent() {
           return (
             <Col sm="4" md="4" key={app.name}>
               <Button
-                variant={getVariant(app.name)}
+                variant={getColour()}
                 className={"text-btn margin-30-top btn-height"}
                 style={{ width: "100%" }}
                 onClick={() => copyApp(app.username, app.pwd)}

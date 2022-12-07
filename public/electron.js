@@ -2,6 +2,7 @@ const path = require("path");
 
 const { app, BrowserWindow } = require("electron");
 const isDev = require("electron-is-dev");
+let win;
 
 // Conditionally include the dev tools installer to load React Dev Tools
 let installExtension, REACT_DEVELOPER_TOOLS;
@@ -19,7 +20,7 @@ if (require("electron-squirrel-startup")) {
 
 function createWindow() {
   // Create the browser window.
-  const win = new BrowserWindow({
+  win = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
