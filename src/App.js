@@ -5,8 +5,9 @@ import AlertComponent from "./components/AlertComponent";
 import notificationService from "./services/NotificationService";
 import loaderService from "./services/LoaderService";
 import userService from "./services/UserService";
-import Token from "./components/Token";
 import { Outlet } from "react-router-dom";
+import appsService from "./services/AppsService";
+import SpinnerComponent from "./components/SpinnerComponent";
 
 function App() {
   /* A variable that is used to set the color of the alert. */
@@ -29,7 +30,7 @@ function App() {
   };
 
   const warn = (txt) => {
-    setVariant("warn");
+    setVariant("danger");
     setAlert(true);
     setAlertTxt(txt);
     setTimeout(() => {
@@ -46,17 +47,23 @@ function App() {
         setUsers(list);
       });
     }
+    appsService.initApps();
   }, [users.length]);
 
   const props = {
     loading,
-    users
-  }
+    users,
+  };
 
   return (
     <>
       <div className={"App"}>
-        <Outlet context={props}/>
+        <Outlet context={props} />
+
+        <div className={"flex-container center"}>
+        <SpinnerComponent loading={loading}></SpinnerComponent>
+        </div>
+
         <AlertComponent
           variant={variant}
           alertTxt={alertTxt}

@@ -97,6 +97,10 @@ export default function TokenGenerator({ users }) {
     });
   };
 
+  const openApps = () => {
+    navigate("/apps");
+  }
+
   return (
     <>
       <div>
@@ -179,7 +183,7 @@ export default function TokenGenerator({ users }) {
           <Button
             variant="warning"
             className={"text-btn margin-15-top btn-width"}
-            onClick={() => navigate("/apps")}
+            onClick={() => openApps()}
             disabled={disable}
           >
             Apps <AiFillAppstore/>

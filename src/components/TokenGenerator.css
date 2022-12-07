@@ -30,11 +30,15 @@
     margin-bottom:15px;
 }
 
+.margin-30-top{
+    margin-top:30px;
+}
+
 .center{
     display: flex;
     justify-content: center;
 }
 
 .btn-width{
-    width:20vh;
+    width:25vh;
 }

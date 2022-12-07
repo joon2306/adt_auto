@@ -9,7 +9,6 @@ export default function Token() {
     return (
       <div className={"flex-container center body-height"}>
         <TokenGenerator users={users}></TokenGenerator>
-        <SpinnerComponent loading={loading}></SpinnerComponent>
       </div>
     );
   } else {
