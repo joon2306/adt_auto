@@ -15,7 +15,7 @@ import { AiFillAppstore } from "react-icons/ai";
 export default function TokenGenerator({ users, environments }) {
   const [variant, setVariant] = useState("primary");
   const [disable, setDisable] = useState(false);
-  const [val, setVal] = useState(null);
+  const [val, setVal] = useState(environments[0]);
   const [user, setUser] = useState(users[0]);
   const [type, setType] = useState(true);
   const baseUri = BaseUri.url;
@@ -33,7 +33,7 @@ export default function TokenGenerator({ users, environments }) {
     setDisable(false);
   };
 
-  const getToken = (nissan) => {
+  const getToken = () => {
     if (!user || !val) {
       notificationService.warn("Missing Data");
       return;
