@@ -5,18 +5,17 @@ import axios from "axios";
 import notificationService from "../services/NotificationService";
 import loaderService from "../services/LoaderService";
 import Form from "react-bootstrap/Form";
-import Environment from "../lib/Environment";
 import BaseUri from "../lib/BaseUri";
 import userService from "../services/UserService";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useNavigate } from "react-router-dom";
-import { AiFillAppstore } from 'react-icons/ai';
+import { AiFillAppstore } from "react-icons/ai";
 
-export default function TokenGenerator({ users }) {
+export default function TokenGenerator({ users, environments }) {
   const [variant, setVariant] = useState("primary");
   const [disable, setDisable] = useState(false);
-  const [val, setVal] = useState(1);
+  const [val, setVal] = useState(null);
   const [user, setUser] = useState(users[0]);
   const [type, setType] = useState(true);
   const baseUri = BaseUri.url;
@@ -35,15 +34,14 @@ export default function TokenGenerator({ users }) {
   };
 
   const getToken = (nissan) => {
-    if (!user) {
-      notificationService.warn("User not selected");
+    if (!user || !val) {
+      notificationService.warn("Missing Data");
       return;
     }
     const id = user.id;
     const brand = user.brand.toLowerCase();
     loading();
-    const env = Environment[val];
-    const uri = `${baseUri}/${brand}/${env}/${id}/${type}`;
+    const uri = `${baseUri}/${brand}/${val}/${id}/${type}`;
     axios
       .get(uri)
       .then((response) => {
@@ -99,7 +97,7 @@ export default function TokenGenerator({ users }) {
 
   const openApps = () => {
     navigate("/apps");
-  }
+  };
 
   return (
     <>
@@ -108,18 +106,19 @@ export default function TokenGenerator({ users }) {
           Token Generator
         </h1>
 
-        <Form.Select
-          aria-label="Default select example"
-          onChange={(e) => selectEnvironment(e)}
-          className={"margin-15-top margin-15-bottom"}
-        >
-          <option value="1">Devint</option>
-          <option value="2">Ft1</option>
-          <option value="3">Dev</option>
-          <option value="4">RT</option>
-          <option value="5">DEV-MP</option>
-          <option value="6">RT-MP</option>
-        </Form.Select>
+        {!environments.length ? (
+          <></>
+        ) : (
+          <Form.Select
+            aria-label="Default select example"
+            onChange={(e) => selectEnvironment(e)}
+            className={"margin-15-top margin-15-bottom"}
+          >
+          {
+            environments.map(env => <option value={env} key={env}>{env}</option>)
+          }
+          </Form.Select>
+        )}
 
         {!users.length ? (
           <></>
@@ -186,7 +185,7 @@ export default function TokenGenerator({ users }) {
             onClick={() => openApps()}
             disabled={disable}
           >
-            Apps <AiFillAppstore/>
+            Apps <AiFillAppstore />
           </Button>
         </div>
       </div>

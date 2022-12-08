@@ -8,6 +8,7 @@ import userService from "./services/UserService";
 import { Outlet } from "react-router-dom";
 import appsService from "./services/AppsService";
 import SpinnerComponent from "./components/SpinnerComponent";
+import environmentsService from "./services/EnvironmentsService";
 
 function App() {
   /* A variable that is used to set the color of the alert. */
@@ -16,6 +17,7 @@ function App() {
   const [alertTxt, setAlertTxt] = useState("");
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState([]);
+  const [environments, setEnvironments] = useState([]);
 
   loaderService.subscribe("load", () => setLoading(true));
   loaderService.subscribe("stop", () => setLoading(false));
@@ -47,12 +49,19 @@ function App() {
         setUsers(list);
       });
     }
+
+    if(!environments.length){
+      environmentsService.getEnvironments().then(list => {
+        setEnvironments(list);
+      })
+    }
     appsService.initApps();
-  }, [users.length]);
+  }, [users.length, environments.length]);
 
   const props = {
     loading,
     users,
+    environments
   };
 
   return (
