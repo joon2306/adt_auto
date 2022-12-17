@@ -68,7 +68,7 @@ export default function TokenGenerator({ users, environments }) {
 
   const selectUser = (e) => {
     const val = e.target.value;
-    const selectedUser = users.find((el) => el.id === +val);
+    const selectedUser = users.find((el) => el.id === val);
     setUser(selectedUser);
   };
 
