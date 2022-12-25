@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import AlertComponent from "./components/AlertComponent";
+import AlertComponent from "./components/AlertComponent/AlertComponent";
 import notificationService from "./services/NotificationService";
 import loaderService from "./services/LoaderService";
 import userService from "./services/UserService";
 import { Outlet } from "react-router-dom";
 import appsService from "./services/AppsService";
-import SpinnerComponent from "./components/SpinnerComponent";
+import SpinnerComponent from "./components/SpinnerComponent/SpinnerComponent";
 import environmentsService from "./services/EnvironmentsService";
 
 function App() {
@@ -69,7 +69,7 @@ function App() {
       <div className={"App"}>
         <Outlet context={props} />
 
-        <div className={"flex-container center"}>
+        <div className={"flex-container full-center"}>
         <SpinnerComponent loading={loading}></SpinnerComponent>
         </div>
 

@@ -71,7 +71,7 @@ export default function AppsComponent() {
             <Col sm="4" md="4" key={app.name}>
               <Button
                 variant={getColour()}
-                className={"text-btn margin-30-top btn-height"}
+                className={"text-btn margin-30-top App_btn-height"}
                 style={{ width: "100%" }}
                 onClick={() => copyApp(app.username, app.pwd)}
                 disabled={disable}
@@ -114,7 +114,7 @@ export default function AppsComponent() {
           </Row>
         </Container>
 
-        <Container className={"centerPage"} style={{ height: "90vh" }}>
+        <Container className={"flex-container full-center"} style={{ height: "90vh" }}>
           <Row>{listBtns()}</Row>
         </Container>
       </div>

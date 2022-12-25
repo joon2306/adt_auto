@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import "./TokenGenerator.css";
 import axios from "axios";
-import notificationService from "../services/NotificationService";
-import loaderService from "../services/LoaderService";
+import notificationService from "../../services/NotificationService";
+import loaderService from "../../services/LoaderService";
 import Form from "react-bootstrap/Form";
-import BaseUri from "../lib/BaseUri";
-import userService from "../services/UserService";
+import BaseUri from "../../lib/BaseUri";
+import userService from "../../services/UserService";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useNavigate } from "react-router-dom";
@@ -173,7 +173,7 @@ export default function TokenGenerator({ users, environments }) {
         <div>
           <Button
             variant={variant}
-            className={"text-btn margin-15-top margin-15-right btn-width"}
+            className={"text-btn margin-15-top margin-15-right Token_Generator_btn-width"}
             onClick={() => getToken(false)}
             disabled={disable}
           >
@@ -181,7 +181,7 @@ export default function TokenGenerator({ users, environments }) {
           </Button>
           <Button
             variant="warning"
-            className={"text-btn margin-15-top btn-width"}
+            className={"text-btn margin-15-top Token_Generator_btn-width"}
             onClick={() => openApps()}
             disabled={disable}
           >

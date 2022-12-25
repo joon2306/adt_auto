@@ -4,8 +4,8 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Routes, Route, HashRouter, BrowserRouter } from "react-router-dom";
-import AppsComponent from './components/AppsComponent.js/AppsComponent';
-import Token from './components/Token';
+import AppsComponent from './components/AppsComponent/AppsComponent';
+import Token from './components/TokenComponent/Token';
 
 if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
   ReactDOM.render(
